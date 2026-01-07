@@ -1,7 +1,10 @@
 import { mockOrders } from "./mockOrders";
 
 export const salesData = mockOrders.map((order) => {
-  return { date: order.createdAt, amount: order.totalAmount };
+  return {
+    date: new Date(order.createdAt).toLocaleDateString(),
+    amount: order.totalAmount,
+  };
 });
 
 console.log(salesData);
