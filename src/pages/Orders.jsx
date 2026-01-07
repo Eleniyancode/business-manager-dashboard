@@ -1,134 +1,47 @@
-export default function Orders() {
+import { useState } from "react";
+import OrdersTable from "../components/OrdersTable";
+
+function Orders({ orders, setOrders }) {
+  const [orderFilterStatus, setOrderFilterStatus] = useState("");
+
+  const filteredOrders = orders.filter((order) =>
+    orderFilterStatus === "" ? true : order.status === orderFilterStatus
+  );
+
+  function handleStatusChange(orderId) {
+    setOrders((prev) =>
+      prev.map((order) =>
+        order.id === orderId ? { ...order, status: "completed" } : order
+      )
+    );
+  }
+
+  function handleViewDetails(order) {
+    console.log(order); // later: open modal or navigate
+  }
+
   return (
     <div className="mx-5">
-      <h3 className="mb-2">List of all Orders</h3>
-      <ul className="flex flex-col gap-5">
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
+      <div className="flex justify-between mb-3 ">
+        <h2>List of Orders</h2>
 
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
+        <select
+          value={orderFilterStatus}
+          onChange={(e) => setOrderFilterStatus(e.target.value)}
+        >
+          <option value="">Filter by status</option>
+          <option value="completed">Completed</option>
+          <option value="pending">Pending</option>
+        </select>
+      </div>
 
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-
-        <li className="flex gap-5">
-          <p>26th June, 2025</p>
-          <p>Ridwan Abdulrahaman</p>
-          <p>Earphones</p>
-          <p>Completed</p>
-        </li>
-      </ul>
+      <OrdersTable
+        orders={filteredOrders ? filteredOrders : orders}
+        onStatusChange={handleStatusChange}
+        onViewDetails={handleViewDetails}
+      />
     </div>
   );
 }
+
+export default Orders;
