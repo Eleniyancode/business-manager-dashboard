@@ -1,7 +1,7 @@
 import { useState } from "react";
 import OrdersTable from "../components/OrdersTable";
 
-function Orders({ orders, setOrders }) {
+function Orders({ orders, setOrders, currency }) {
   const [orderFilterStatus, setOrderFilterStatus] = useState("");
 
   const filteredOrders = orders.filter((order) =>
@@ -39,6 +39,7 @@ function Orders({ orders, setOrders }) {
         orders={filteredOrders ? filteredOrders : orders}
         onStatusChange={handleStatusChange}
         onViewDetails={handleViewDetails}
+        currency={currency}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-function OrdersTable({ orders, onStatusChange, onViewDetails }) {
+function OrdersTable({ orders, onStatusChange, onViewDetails, currency }) {
   return (
     <div className="bg-white rounded-lg shadow-sm">
       {/* Desktop / Tablet Table */}
@@ -16,7 +16,15 @@ function OrdersTable({ orders, onStatusChange, onViewDetails }) {
                 Date
               </th>
               <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
-                Amount (₦)
+                Amount (
+                {currency === "Naira"
+                  ? "₦"
+                  : currency === "Dollar"
+                  ? "$"
+                  : currency === "Euro"
+                  ? "₤"
+                  : ""}
+                )
               </th>
               <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
                 Status
@@ -43,7 +51,14 @@ function OrdersTable({ orders, onStatusChange, onViewDetails }) {
                   {new Date(order.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4 text-sm font-semibold text-gray-900">
-                  ₦{order.totalAmount.toLocaleString()}
+                  {currency === "Naira"
+                    ? "₦"
+                    : currency === "Dollar"
+                    ? "$"
+                    : currency === "Euro"
+                    ? "₤"
+                    : ""}
+                  {order.totalAmount.toLocaleString()}
                 </td>
                 <td className="px-6 py-4">
                   <span

@@ -1,8 +1,14 @@
 import { useState } from "react";
 import NewProductForm from "../components/NewProductForm";
 import EditingProductForm from "../components/EditingProductForm";
+import { convertCurrency } from "../utils/convertCurrency";
 
-export default function Products({ products, setProducts, onDelete }) {
+export default function Products({
+  products,
+  setProducts,
+  onDelete,
+  currency,
+}) {
   const [showNewProductForm, setShowNewProductForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
 
@@ -53,6 +59,7 @@ export default function Products({ products, setProducts, onDelete }) {
               onDelete={onDelete}
               onEdit={handleEditProduct}
               setEditingProduct={setEditingProduct}
+              currency={currency}
             />
           );
         })}
@@ -61,7 +68,7 @@ export default function Products({ products, setProducts, onDelete }) {
   );
 }
 
-function Product({ product, onDelete, setEditingProduct }) {
+function Product({ product, onDelete, setEditingProduct, currency }) {
   return (
     <>
       <li class="hidden md:block">
@@ -75,7 +82,15 @@ function Product({ product, onDelete, setEditingProduct }) {
                 Product Name
               </th>
               <th class="py-3 px-6 text-left text-gray-700 font-medium">
-                Product Price
+                Product Price (
+                {currency === "Naira"
+                  ? "₦"
+                  : currency === "Dollar"
+                  ? "$"
+                  : currency === "Euro"
+                  ? "₤"
+                  : ""}
+                )
               </th>
               <th class="py-3 px-6 text-left text-gray-700 font-medium">
                 Product Stock
@@ -86,7 +101,16 @@ function Product({ product, onDelete, setEditingProduct }) {
             <tr class="hover:bg-gray-50">
               <td class="py-3 px-6">{product.id}</td>
               <td class="py-3 px-6">{product.name}</td>
-              <td class="py-3 px-6">{product.price}</td>
+              <td class="py-3 px-6">
+                {currency === "Naira"
+                  ? "₦"
+                  : currency === "Dollar"
+                  ? "$"
+                  : currency === "Euro"
+                  ? "₤"
+                  : ""}
+                {convertCurrency(product.price, currency)}
+              </td>
               <td class="py-3 px-6">{product.stock}</td>
               <td class="py-3 px-6 space-x-2">
                 <button
@@ -119,7 +143,7 @@ function Product({ product, onDelete, setEditingProduct }) {
           </div>
           <div class="flex justify-between py-1">
             <span class="font-medium text-gray-700">Product Price:</span>
-            <span>{product.price}</span>
+            <span>{convertCurrency(product.price, currency)}</span>
           </div>
           <div class="flex justify-between py-1">
             <span class="font-medium text-gray-700">Product Stock:</span>

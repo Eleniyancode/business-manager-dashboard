@@ -27,7 +27,9 @@ function App() {
   return (
     <>
       <div className="mx-5 my-5">
-        <h1 className="text-3xl mb-3">{businessName} Dashboard</h1>
+        <h1 className="text-3xl mb-3">
+          {businessName ? businessName : "Business Manager"} Dashboard
+        </h1>
         <nav className="flex gap-8">
           <NavLink
             to="/"
@@ -84,12 +86,15 @@ function App() {
               products={products}
               setProducts={setProducts}
               onDelete={handleDeleteProduct}
+              currency={currency}
             />
           }
         />
         <Route
           path="/orders"
-          element={<Orders orders={orders} setOrders={setOrders} />}
+          element={
+            <Orders orders={orders} setOrders={setOrders} currency={currency} />
+          }
         />
         <Route
           path="/settings"

@@ -1,11 +1,14 @@
-export default function Settings({
-  businessname,
-  setBusinessName,
-  currency,
-  setCurrency,
-}) {
+import { useState } from "react";
+
+export default function Settings({ setBusinessName, setCurrency }) {
+  const [name, setName] = useState("");
+  const [currencyUnit, setCurrencyUnit] = useState("Naira");
+
   function handleSubmit(e) {
     e.preventDefault();
+
+    setBusinessName(name);
+    setCurrency(currencyUnit);
   }
   return (
     <div className="mx-5">
@@ -18,8 +21,8 @@ export default function Settings({
         <div className="flex flex-col">
           <label>Business name:</label>
           <input
-            value={businessname}
-            onChange={(e) => setBusinessName(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             type="text"
             placeholder="Business Manager Dashboard"
             className="border-blue-400 border p-2"
@@ -29,8 +32,8 @@ export default function Settings({
         <div className="flex flex-col">
           <label>Currency</label>
           <select
-            value={currency}
-            onChange={(e) => setCurrency(e.target.value)}
+            value={currencyUnit}
+            onChange={(e) => setCurrencyUnit(e.target.value)}
             className="border-blue-400 border p-2"
           >
             <option value={"Naira"}>Naira</option>
